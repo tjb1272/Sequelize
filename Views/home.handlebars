@@ -1,0 +1,19 @@
+<h1>Add Your Artist and Album Here</h1>
+<a href='/add'>Go to Input Page</a>
+
+<div>
+<table>
+    <tbody>
+        <tr>
+            <th>Artist Name</th>
+            <th>Album</th>
+        </tr>
+        {{#each combined}}
+        <tr>
+            <td>{{this.Name}}</td>
+            <td>{{this.Title}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</div>
