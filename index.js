@@ -14,10 +14,13 @@ app.use(bodyParser.json())
 app.set('port', process.env.PORT || 3000)
 
 
-app.use((req, res, next) => {
-  res.header('Content-Type', 'application/json');
-  next();
-});
+var http = require('http');
+var options = {method: 'HEAD', port: 3000, path: '/'};
+var req = http.request(options, function(res) {
+    console.log(JSON.stringify(res.headers));
+  }
+);
+req.end();
 
 
 const sequelize = new Sequelize('Music', 'tjb1272', null, {
