@@ -13,7 +13,7 @@ app.set('view engine', 'handlebars')
 app.use(bodyParser.json())
 app.set('port', process.env.PORT || 3000)
 
-
+//Header
 var http = require('http');
 var options = {method: 'HEAD', port: 3000, path: '/'};
 var req = http.request(options, function(res) {
@@ -29,7 +29,7 @@ const sequelize = new Sequelize('Music', 'tjb1272', null, {
   storage: './Chinook_Sqlite_AutoIncrementPKs.sqlite'
 });
 
-
+//Models
 const Artist = sequelize.define('Artist', {
   ArtistId: {
     type: Sequelize.INTEGER,
@@ -42,7 +42,6 @@ const Artist = sequelize.define('Artist', {
 freezeTableName: true,
 timestamps: false
 })
-
 
 const Album = sequelize.define('Album', {
   ArtistId: {
@@ -57,16 +56,14 @@ freezeTableName: true,
 timestamps: false
 })
 
-
+//Associations/Relationships
 Artist.hasMany(Album, {foreignKey: 'ArtistId'})
 Album.belongsTo(Artist, {foreignKey: 'ArtistId'})
 
 
-// sequelize.query('`SELECT * FROM `artist`', {})
-
-
 router.get('/album', (req, res) => {
   Album.findAll(combined, (req, row) => {
+    // console.log(combined);
     include: [{
       model: Artist,
       where: {
@@ -75,7 +72,7 @@ router.get('/album', (req, res) => {
     }]
   })
   .then(Album => {
-      if (err) throw err;
+      // if (err) throw err;
       console.log(row)
       res.render('home', {combined: row})
   })
