@@ -22,7 +22,7 @@ var req = http.request(options, function(res) {
 );
 req.end();
 
-
+//Connection
 const sequelize = new Sequelize('Music', 'tjb1272', null, {
   host: 'localhost',
   dialect: 'sqlite',
@@ -62,8 +62,7 @@ Album.belongsTo(Artist, {foreignKey: 'ArtistId'})
 
 
 router.get('/album', (req, res) => {
-  Album.findAll(combined, (req, row) => {
-    // console.log(combined);
+  Album.findAll({
     include: [{
       model: Artist,
       where: {
@@ -72,9 +71,26 @@ router.get('/album', (req, res) => {
     }]
   })
   .then(Album => {
-      // if (err) throw err;
-      console.log(row)
-      res.render('home', {combined: row})
+    const combined = Album.map(Album => {
+      return Object.assign(
+        {},
+      {
+        ArtistId: Album.ArtistId,
+        Title: Album.Title,
+        Name: Album.Name.map(Artist => {
+          return Object.assign(
+            {},
+            {
+              ArtistId: Artist.ArtistId,
+              Name: Artist.Name
+            }
+          )
+          Console.log(combined);
+          Console.log(Title);
+          Console.log(Name);
+        })
+      })
+    })
   })
 })
 
