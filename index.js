@@ -61,38 +61,17 @@ Artist.hasMany(Album, {foreignKey: 'ArtistId'})
 Album.belongsTo(Artist, {foreignKey: 'ArtistId'})
 
 
-router.get('/album', (req, res) => {
-  Album.findAll({
-    include: [{
-      model: Artist,
-      where: {
-        ArtistId: req.params['id']
-      }
-    }]
-  })
-  .then(Album => {
-    const combined = Album.map(Album => {
-      return Object.assign(
-        {},
-      {
-        ArtistId: Album.ArtistId,
-        Title: Album.Title,
-        Name: Album.Name.map(Artist => {
-          return Object.assign(
-            {},
-            {
-              ArtistId: Artist.ArtistId,
-              Name: Artist.Name
-            }
-          )
-          Console.log(combined);
-          Console.log(Title);
-          Console.log(Name);
-        })
-      })
-    })
-  })
-})
+app.get('/album', (req, res) => {
+ Album.findAll().then(albums => {
+   Artist.findAll().then(artists => {  
+     limit: 100;    
+     where: { ArtistId: req.params['id'] }
+     res.render('home', { artists: artists, albums: albums });
+     console.log(artists);
+     console.log(albums);
+   });
+ });
+});
 
 app.use((req, res) => {
   res.status(400);
