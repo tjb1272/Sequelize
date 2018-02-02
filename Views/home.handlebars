@@ -1,3 +1,26 @@
+<style>
+table{
+	width:100%; 
+	border-collapse:collapse; 
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;	
+}
+td{ 
+	padding:10px; 
+}
+tr{
+	background: #ffffff;
+}
+tr:hover {
+    background-color: #3784c2b6;
+}
+th{
+    font-style: italic;
+    color: rgba(15, 83, 192, 0.719)
+}
+</style>
+
 <div>
 <table>
     <tbody>
@@ -5,12 +28,12 @@
             <th>Artist Name</th>
             <th>Album</th>
         </tr>
-        {{#each Album}}
+        {{#albums}}
         <tr>
-            <td>{{artists}}</td>
-            <td>{{albums}}</td>
+            <td>{{Title}}</td>
+            <td>{{Artist.Name}}</td>
         </tr>
-        {{/each}}
+        {{/albums}}
     </tbody>
 </table>
 </div>
