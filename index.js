@@ -66,7 +66,7 @@ const Album = sequelize.define(
 Artist.hasMany(Album, { foreignKey: "ArtistId" });
 Album.belongsTo(Artist, { foreignKey: "ArtistId" });
 
-app.get("/album", (request, response) => {
+app.get("/album", (req, res) => {
   Album.findAll({
     include: [
       {
@@ -74,7 +74,7 @@ app.get("/album", (request, response) => {
       }
     ]
   }).then(albums => {
-    response.render('home', { albums: albums });
+    res.render('home', { albums: albums });
   });
 });
 
